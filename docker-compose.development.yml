@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile.development
     links:
-      - mail
+      #- mail
       - mysql
       #- postgres
       #- solr
@@ -18,11 +18,12 @@ services:
       #- ftp
     ports:
       - "8000:80"
-      - "8443:443"
-      - "10022:22"
+      #- "8443:443"
+      #- "10022:22"
     volumes:
       - ./app/:/app/
       - ./:/docker/
+      - ~/.ssh/:/root/.ssh/
     # cap and privileged needed for slowlog
     cap_add:
       - SYS_PTRACE
@@ -53,7 +54,7 @@ services:
     ports:
       - 13306:3306
     volumes:
-      - mysql:/var/lib/mysql
+      - ./var/mysql:/var/lib/mysql
     env_file:
       - etc/environment.yml
       - etc/environment.development.yml
@@ -143,13 +144,13 @@ services:
   # Mail
   #######################################
   # Mailhog
-  mail:
-     image: mailhog/mailhog
+  #mail:
+  #   image: mailhog/mailhog
    #  ports:
    #    - 8025:8025
-     environment:
-      - VIRTUAL_HOST=mail.boilerplate.docker
-      - VIRTUAL_PORT=8025
+  #   environment:
+  #    - VIRTUAL_HOST=mail.boilerplate.docker
+  #    - VIRTUAL_PORT=8025
 
   # Mailcatcher
   #mail:
