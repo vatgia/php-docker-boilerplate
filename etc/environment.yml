@@ -63,6 +63,7 @@ MYSQL_ROOT_PASSWORD=dev
 MYSQL_USER=dev
 MYSQL_PASSWORD=dev
 MYSQL_DATABASE=database
+TZ=Asia/Ho_Chi_Minh
 
 #######################################
 # PostgreSQL settings
