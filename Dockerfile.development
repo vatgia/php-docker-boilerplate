@@ -49,17 +49,24 @@
 #
 #++++++++++++++++++++++++++++++++++++++
 
-FROM webdevops/php-apache-dev:7.4
+FROM webdevops/php-apache-dev:8.3
 
 ENV PROVISION_CONTEXT "development"
 
 # Deploy scripts/configurations
 COPY etc/             /opt/docker/etc/
 
+RUN apt update -y \
+    && apt install -y unixodbc unixodbc-dev
+
+
 RUN ln -sf /opt/docker/etc/cron/crontab /etc/cron.d/docker-boilerplate \
     && chmod 0644 /opt/docker/etc/cron/crontab \
     && echo >> /opt/docker/etc/cron/crontab \
-    && ln -sf /opt/docker/etc/php/development.ini /opt/docker/etc/php/php.ini
+    && ln -sf /opt/docker/etc/php/development.ini /opt/docker/etc/php/php.ini \
+    && ln -sf /opt/docker/etc/odbc/conf/odbc.ini /etc/odbc.ini \
+    && ln -sf /opt/docker/etc/odbc/conf/odbcinst.ini /etc/odbcinst.ini \
+    && ln -sf /opt/docker/etc/odbc/driver/odbc.so /usr/local/lib/php/extensions/no-debug-non-zts-20230831/odbc.so
 
 # Configure volume/workdir
 WORKDIR /app/
